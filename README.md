@@ -10,5 +10,6 @@ will output a JSON string containing all Canadian phone numbers found from the i
 What you will need:
 
 [Eclipse Java EE IDE for Web Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
+[Apache Tomcat 7](https://tomcat.apache.org/download-70.cgi) - choose the appropriate link for the OS you are using
 
 # Usage
