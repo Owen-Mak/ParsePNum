@@ -1,0 +1,8 @@
+This is a phone number file for testing:
+
+Test cases
+http://localhost:8080/MyFirstServlet/HelloServlet/313a3123%20321%204162974913%20asd(416)297-4914  
+-> ["4162974913","4162974915"]
+
+Feel free to add more phone numbers into this file.
+It should only find 3 phone numbers in its current state.
