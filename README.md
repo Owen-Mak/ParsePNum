@@ -37,12 +37,12 @@ To create a new Apache Server:
   1. Choose Tomcat v7.0 Server, and set host name as localhost.  Select Next.
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup1.png)
   * Note: If this is your first time, you may need to tell the IDE where the Tomcat installation directory is.
-    Use Browse button and search for your Apache Tomcat installation folder.
-     ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup2.png)
-  1. Right click the newly created server, choose "Add and Remove..."
+    Use Browse button and search for your Apache Tomcat installation folder.    
+      ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup2.png)     
+  4. Right click the newly created server, choose "Add and Remove..."
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup3.png)
-  1. Add the servlet ParsePNum from "Available" to "Configured".
-  1. The server is ready to be deployed.  Read below for usage.
+  5. Add the servlet ParsePNum from "Available" to "Configured".
+  6. The server is ready to be deployed.  Read below for usage.
 
 # Usage
 The first thing to do is to start the apache server.  
