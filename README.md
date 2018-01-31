@@ -23,14 +23,18 @@ Instructions for Windows deployment
 # Usage
 The first thing to do is to start the apache server.  Simply go to Window -> Show View -> Server
 Next start the server from the server menu.  Here's a screenshot:
+
 ![picture](![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/RunServer.png)
 
-To access the servlet's main page, go to [ParsePNum](http://localhost:8080/ParsePNum/phonenumberparse.jsp)
+After the server is running, to access the servlet's main page, go to [ParsePNum](http://localhost:8080/ParsePNum/phonenumberparse.jsp)
 
 Currently, there are 3 ways to use ParsePNum.
   1. GET from servlet page
+     1.  Simply type in the text and click submit.
   1. POST from servlet page
+     1.  Simply upload the file and click submit.
   1. GET by editting URL on address bar
+     1.  Edit the address bar as per screenshot below.
 
 # Unit testing
 
