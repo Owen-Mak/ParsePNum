@@ -32,12 +32,9 @@ To start a unit test:
 * Open PhonenumbersTest.java
 * Select Run from main menu -> Run As -> JUnit Test
 
-{::nomarkdown}
 
-<img src=https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ExecuteUnitTest.png" height="48" width="48" >
-                                                                                                                  
-{:/}
-
+![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ExecuteUnitTest.png)
+                                                                                                             
 # To Do
 *  Unit testing for doPost()
    *  Ideally using Spring Test Framework or JUnit with Mockito
