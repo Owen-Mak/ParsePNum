@@ -2,11 +2,10 @@ package net.codejava;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.File;
-import java.io.FileReader;
+import java.awt.List;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -21,15 +20,10 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
-import com.google.i18n.phonenumbers.AsYouTypeFormatter;
-import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
-import com.google.i18n.phonenumbers.ShortNumberInfo;
-
 import java.net.URLDecoder;
 
 
@@ -71,6 +65,9 @@ public class Phonenumbers extends HttpServlet {
 			name = URLDecoder.decode(relUrl, "UTF-8");			
 		}				
 		Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(name, "CA");
+		printNonDuplicateNumbers(matches, response);
+		
+		/*
 		Iterator<PhoneNumberMatch> i = matches.iterator();
 		response.getWriter().print("[");
 		while(i.hasNext()) {
@@ -78,7 +75,8 @@ public class Phonenumbers extends HttpServlet {
 			String out = "\"" + phoneUtil.format(m.number(), PhoneNumberFormat.NATIONAL) + "\"";
 			response.getWriter().print(i.hasNext() ? out + "," : out);			
 		}
-		response.getWriter().print("]");	
+		response.getWriter().print("]");
+		*/	
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -99,6 +97,8 @@ public class Phonenumbers extends HttpServlet {
 		response.setContentType("text/html");
 	    response.setCharacterEncoding(UTF_8.name());
 	    Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(contents, "CA");
+	    printNonDuplicateNumbers(matches, response);
+	    /*
 	    Iterator<PhoneNumberMatch> i = matches.iterator();
 	    response.getWriter().print("[");
 		while(i.hasNext()) {
@@ -106,7 +106,36 @@ public class Phonenumbers extends HttpServlet {
 			String out = "\"" + phoneUtil.format(m.number(), PhoneNumberFormat.NATIONAL) + "\"";
 			response.getWriter().print(i.hasNext() ? out + "," : out);			
 		}
-		response.getWriter().print("]");	    
+		response.getWriter().print("]");
+		*/	    
+	}
+	
+	protected void printNonDuplicateNumbers(Iterable<PhoneNumberMatch> matches, HttpServletResponse response) {
+		Iterator<PhoneNumberMatch> i = matches.iterator();
+		ArrayList<PhoneNumber> fullNumberList = new ArrayList<>();
+		ArrayList<PhoneNumber> noDuplicateList = new ArrayList<>();
+		while (i.hasNext()) {
+			PhoneNumberMatch m = i.next();
+			fullNumberList.add(m.number());						
+		}
+		for (PhoneNumber m : fullNumberList) {
+			if (!noDuplicateList.contains(m)) {
+				noDuplicateList.add(m);
+			}
+		}
+		try {
+			response.getWriter().print("[");
+			Iterator<PhoneNumber> j = noDuplicateList.iterator();
+			while (j.hasNext()) {
+				PhoneNumber m = j.next();
+				String out = "\"" + phoneUtil.format(m, PhoneNumberFormat.NATIONAL) + "\"";				
+				response.getWriter().print(j.hasNext() ? out + "," : out);	
+			}
+			response.getWriter().print("]");	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
