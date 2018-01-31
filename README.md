@@ -31,7 +31,8 @@ method being tested is doGet() method.
 To start a unit test:
 * Open PhonenumbersTest.java
 * Select Run from main menu -> Run As -> JUnit Test
-![](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ExecuteUnitTest.png | width=100)
+
+![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ExecuteUnitTest.png?raw =300x300)
 
 # To Do
 *  Unit testing for doPost()
