@@ -8,7 +8,6 @@ will output a JSON string containing all Canadian phone numbers found from the i
 
 # How to deploy?
 What you will need:
-Eclipse Java EE IDE for Web Developers 
-*(http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
+Eclipse Java EE IDE for Web Developers(http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
 
 # Usage
