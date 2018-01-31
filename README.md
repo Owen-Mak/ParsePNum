@@ -29,7 +29,7 @@ Next start the server from the server menu.  Here's a screenshot:
 
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/RunServer.png)
 
-After the server is running, to access the servlet's main page, go to [ParsePNum](http://localhost:8080/ParsePNum/phonenumberparse.jsp)
+After the server is running, to access the servlet's main page, go to [http://localhost:8080/ParsePNum/phonenumberparse.jsp](http://localhost:8080/ParsePNum/phonenumberparse.jsp).  This assumes you started server on port 8080.
 
 Here's a screenshot of the main page:
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/MainPage.png)
