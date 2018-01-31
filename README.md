@@ -35,6 +35,7 @@ Currently, there are 3 ways to use ParsePNum.
      *  Simply upload the file and click submit.
   1. GET by editting URL on address bar
      *  Edit the address bar as per screenshot below.
+     ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/GetAddressBar.png)
 
 # Unit testing
 
