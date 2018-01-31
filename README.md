@@ -25,7 +25,17 @@ Instructions for Windows deployment
 
 # Unit testing
 
+The tests are in src/PhonenumbersTest.java.  They are written using JUnit and Mockito libraries.  Currently, the only 
+method being tested is doGet() method.  
+
+To start a unit test:
+* Open PhonenumbersTest.java
+* Select Run from main menu -> Run As -> JUnit Test
+
+
 # To Do
 *  Unit testing for doPost()
    *  Ideally using Spring Test Framework or JUnit with Mockito
-*  
+*  Include more test cases 
+*  Automated testing using Travis CI
+*  Parsing PDF or MS Word files
