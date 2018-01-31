@@ -33,6 +33,7 @@ After the server is running, to access the servlet's main page, go to [ParsePNum
 
 Here's a screenshot of the main page:
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/MainPage.png)
+
 Currently, there are 3 ways to use ParsePNum.
   1. GET from servlet page
      *  Simply type text into the GET textbox and click submit.
