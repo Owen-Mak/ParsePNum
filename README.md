@@ -8,7 +8,7 @@ will output a JSON string containing all Canadian phone numbers found from the i
 
 # Quick Links
 *  [The libphonenumber library](https://github.com/googlei18n/libphonenumber)
-*  [Quick guide on how to create a servlet](http://www.codejava.net/ides/eclipse/how-to-create-deploy-and-run-java-servlet-in-eclipse) - contributed from Patrick Godbout
+*  [Quick guide on how to create a servlet](http://www.codejava.net/ides/eclipse/how-to-create-deploy-and-run-java-servlet-in-eclipse) 
 *  [Quick guide to JUnit tests in mockito](http://javaworld-abhinav.blogspot.ca/2014/06/testing-servlets-using-junit-and-mockito.html)
 
 # How to deploy?
@@ -17,4 +17,15 @@ What you will need:
 *  [Eclipse Java EE IDE for Web Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
 *  [Apache Tomcat 7](https://tomcat.apache.org/download-70.cgi) - choose the appropriate link for the OS you are using
 
+Instructions for Windows deployment
+
+
 # Usage
+
+
+# Unit testing
+
+# To Do
+*  Unit testing for doPost()
+   *  Ideally using Spring Test Framework or JUnit with Mockito
+*  
