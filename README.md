@@ -21,7 +21,13 @@ Instructions for Windows deployment
 
 
 # Usage
+The first thing to do is to start the apache server.  Simply go to 
+To access the servlet's main page, go to [ParsePNum](http://localhost:8080/ParsePNum/phonenumberparse.jsp)
 
+Currently, there are 3 ways to use ParsePNum.
+  1. GET from servlet page
+  1. POST from servlet page
+  1. GET by editting URL on address bar
 
 # Unit testing
 
@@ -32,9 +38,10 @@ To start a unit test:
 * Open PhonenumbersTest.java
 * Select Run from main menu -> Run As -> JUnit Test
 
-
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ExecuteUnitTest.png)
-                                                                                                             
+
+To add more test cases, simply create a new test# method, and add that test method onto the main method.
+
 # To Do
 *  Unit testing for doPost()
    *  Ideally using Spring Test Framework or JUnit with Mockito
