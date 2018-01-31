@@ -30,11 +30,11 @@ After the server is running, to access the servlet's main page, go to [ParsePNum
 
 Currently, there are 3 ways to use ParsePNum.
   1. GET from servlet page
-     1.  Simply type in the text and click submit.
+     *  Simply type in the text and click submit.
   1. POST from servlet page
-     1.  Simply upload the file and click submit.
+     *  Simply upload the file and click submit.
   1. GET by editting URL on address bar
-     1.  Edit the address bar as per screenshot below.
+     *  Edit the address bar as per screenshot below.
 
 # Unit testing
 
