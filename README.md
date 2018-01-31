@@ -27,7 +27,7 @@ Instructions for Windows deployment:
   1. Once inside eclipse, choose File -> Import -> Web -> WAR file
   1. Import the WAR file you downloaded from "How to deploy?" [Link Here to WAR file](https://github.com/Owen-Mak/ParsePNum/blob/master/ParsePNum.war)
   
-  ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ImportWAR.png)
+![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ImportWAR.png)
   
   1. Use "ParsePNum" as name of the web project and set Target Runtime to Apache Tomcat v7.0.  Choose Finish.
   
@@ -44,7 +44,7 @@ To create a new Apache Server:
   
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup1.png)
   
-     * If this is your first time, you may need to tell the IDE where the Tomcat installation directory is.
+   * Note: If this is your first time, you may need to tell the IDE where the Tomcat installation directory is.
      Use Browse button and search for your Apache Tomcat installation folder.
      
      ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup2.png)
