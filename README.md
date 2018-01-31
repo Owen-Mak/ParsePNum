@@ -26,33 +26,21 @@ Instructions for Windows deployment:
   1. Select a workspace.
   1. Once inside eclipse, choose File -> Import -> Web -> WAR file
   1. Import the WAR file you downloaded from "How to deploy?" [Link Here to WAR file](https://github.com/Owen-Mak/ParsePNum/blob/master/ParsePNum.war)
-  
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ImportWAR.png)
-  
   1. Use "ParsePNum" as name of the web project and set Target Runtime to Apache Tomcat v7.0.  Choose Finish.
-  
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/ImportWAR2.png)
-  
-To create a new Apache Server:
 
+To create a new Apache Server:
   1. Go to Server window with Window -> Show View -> Server
   1. Click on link to create a new server
-  
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerLink.png)
-  
   1. Choose Tomcat v7.0 Server, and set host name as localhost.  Select Next.
-  
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup1.png)
-  
-   * Note: If this is your first time, you may need to tell the IDE where the Tomcat installation directory is.
-     Use Browse button and search for your Apache Tomcat installation folder.
-     
+  * Note: If this is your first time, you may need to tell the IDE where the Tomcat installation directory is.
+    Use Browse button and search for your Apache Tomcat installation folder.
      ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup2.png)
-  
   1. Right click the newly created server, choose "Add and Remove..."
-  
   ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/NewServerSetup3.png)
-  
   1. Add the servlet ParsePNum from "Available" to "Configured".
   1. The server is ready to be deployed.  Read below for usage.
 
