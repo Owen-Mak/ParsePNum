@@ -21,7 +21,10 @@ Instructions for Windows deployment
 
 
 # Usage
-The first thing to do is to start the apache server.  Simply go to Window -> Show View -> Server
+The first thing to do is to start the apache server.  
+
+Simply go to Window -> Show View -> Server
+
 Next start the server from the server menu.  Here's a screenshot:
 
 ![picture](https://github.com/Owen-Mak/ParsePNum/blob/master/screenshots/RunServer.png)
