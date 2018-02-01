@@ -88,3 +88,7 @@ To add more test cases, simply create a new test# method, and add that test meth
 *  Automated testing using Travis CI
 *  Parsing PDF or MS Word files
 *  Add instructions to deploy in other OS (linux, macOS)
+
+# License
+This license is under BSD-2 clause.  You can find out more at [BSD](https://github.com/Owen-Mak/ParsePNum/blob/ParsePNum/LICENSE)
+Also, IANAL.
