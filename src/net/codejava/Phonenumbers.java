@@ -2,7 +2,6 @@ package net.codejava;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.List;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -65,18 +64,7 @@ public class Phonenumbers extends HttpServlet {
 			name = URLDecoder.decode(relUrl, "UTF-8");			
 		}				
 		Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(name, "CA");
-		printNonDuplicateNumbers(matches, response);
-		
-		/*
-		Iterator<PhoneNumberMatch> i = matches.iterator();
-		response.getWriter().print("[");
-		while(i.hasNext()) {
-			PhoneNumberMatch m = i.next();
-			String out = "\"" + phoneUtil.format(m.number(), PhoneNumberFormat.NATIONAL) + "\"";
-			response.getWriter().print(i.hasNext() ? out + "," : out);			
-		}
-		response.getWriter().print("]");
-		*/	
+		printNonDuplicateNumbers(matches, response);			
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -98,16 +86,7 @@ public class Phonenumbers extends HttpServlet {
 	    response.setCharacterEncoding(UTF_8.name());
 	    Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(contents, "CA");
 	    printNonDuplicateNumbers(matches, response);
-	    /*
-	    Iterator<PhoneNumberMatch> i = matches.iterator();
-	    response.getWriter().print("[");
-		while(i.hasNext()) {
-			PhoneNumberMatch m = i.next();
-			String out = "\"" + phoneUtil.format(m.number(), PhoneNumberFormat.NATIONAL) + "\"";
-			response.getWriter().print(i.hasNext() ? out + "," : out);			
-		}
-		response.getWriter().print("]");
-		*/	    
+	     
 	}
 	
 	protected void printNonDuplicateNumbers(Iterable<PhoneNumberMatch> matches, HttpServletResponse response) {
