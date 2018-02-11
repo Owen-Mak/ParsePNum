@@ -46,7 +46,7 @@ public class Phonenumbers extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = null;
 		StringBuffer fullUrl = request.getRequestURL();
 		String baseUrl = request.getScheme() + "://" + 
@@ -67,7 +67,7 @@ public class Phonenumbers extends HttpServlet {
 		printNonDuplicateNumbers(matches, response);			
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletFileUpload upload = new ServletFileUpload();
 		upload.setSizeMax(50000);
 		String contents = null;
