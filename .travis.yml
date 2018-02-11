@@ -1,0 +1,12 @@
+language: java
+sudo: false
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn test -B
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+os:
+  - windows
+script:
+  - mvn -Dtest=PhonenumbersTest test
