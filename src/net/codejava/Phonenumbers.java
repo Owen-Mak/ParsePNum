@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,16 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
 import java.net.URLDecoder;
 
+import org.apache.pdfbox.io.IOUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 /**
  * Servlet implementation class HelloServlet
  */
 
 @WebServlet(urlPatterns = {"/phonenumbers/parse/text/*", "/phonenumbers/parse/file"})
+@MultipartConfig
 public class Phonenumbers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
@@ -74,19 +79,29 @@ public class Phonenumbers extends HttpServlet {
 		try {
 		      FileItemIterator iterator = upload.getItemIterator(request);
 		      while (iterator.hasNext()) {
-		    	  FileItemStream item = iterator.next();		    	 
-		          InputStream in = item.openStream();
-		          contents = Streams.asString(in, UTF_8.name());
-		      }
-		      
+		    	  FileItemStream item = iterator.next();
+		    	  String filename = item.getName();	    	
+		    	  if(filename.substring(filename.lastIndexOf(".")).equals(".txt")){
+			          InputStream in = item.openStream();
+			          contents = Streams.asString(in, UTF_8.name());		         
+		    	  }
+		    	  else if(filename.substring(filename.lastIndexOf(".")).equals(".pdf")){
+		    		  InputStream in = item.openStream();
+		    		  PDDocument document = PDDocument.load(IOUtils.toByteArray(in));
+		    		  if (!document.isEncrypted()) {
+		    		      PDFTextStripper stripper = new PDFTextStripper();
+		    		      contents = stripper.getText(document);
+		    		  }
+		    		  document.close();		    		 
+		    	  }
+		      }		      
 		} catch (FileUploadException e) {
 			e.printStackTrace();
-		}
+		}		
 		response.setContentType("text/html");
 	    response.setCharacterEncoding(UTF_8.name());
 	    Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(contents, "CA");
-	    printNonDuplicateNumbers(matches, response);
-	     
+	    printNonDuplicateNumbers(matches, response);		 
 	}
 	
 	protected void printNonDuplicateNumbers(Iterable<PhoneNumberMatch> matches, HttpServletResponse response) {
