@@ -1,3 +1,6 @@
+Build status of the latest master branch:
+![Status](https://api.travis-ci.org/Owen-Mak/ParsePNum.svg?branch-master)
+
 # ParsePNum
 Java servlet used to parse phone numbers using google's libphonenumber library.
 
