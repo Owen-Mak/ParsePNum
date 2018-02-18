@@ -48,6 +48,7 @@ public class Phonenumbers extends HttpServlet {
      */
     public Phonenumbers() {
         super();
+        this.fileUpload = new ServletFileUpload();
         // TODO Auto-generated constructor stub
     }
 
@@ -88,7 +89,7 @@ public class Phonenumbers extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//ServletFileUpload upload = new ServletFileUpload();
-		ServletFileUpload fileUpload = new ServletFileUpload();
+		//ServletFileUpload fileUpload = new ServletFileUpload();
 		fileUpload.setSizeMax(50000);
 		String contents = null;
 		try {
