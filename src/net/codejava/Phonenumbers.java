@@ -2,11 +2,14 @@ package net.codejava;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +38,11 @@ public class Phonenumbers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
        
+	private static final String FILES_PATH = "/files";
+	private ServletFileUpload fileUpload;
+	private ServletContext servletContext;
+	private boolean doPostTestFlag = false;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,6 +51,17 @@ public class Phonenumbers extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    public Phonenumbers(ServletFileUpload fileUpload) {
+        this.fileUpload = fileUpload;
+        this.doPostTestFlag = true;
+    }
+    
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        this.servletContext = config.getServletContext();
+        configureFilesPath();
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -68,11 +87,12 @@ public class Phonenumbers extends HttpServlet {
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletFileUpload upload = new ServletFileUpload();
-		upload.setSizeMax(50000);
+		//ServletFileUpload upload = new ServletFileUpload();
+		//fileUpload = new ServletFileUpload();
+		fileUpload.setSizeMax(50000);
 		String contents = null;
 		try {
-		      FileItemIterator iterator = upload.getItemIterator(request);
+		      FileItemIterator iterator = fileUpload.getItemIterator(request);
 		      while (iterator.hasNext()) {
 		    	  FileItemStream item = iterator.next();		    	 
 		          InputStream in = item.openStream();
@@ -89,6 +109,20 @@ public class Phonenumbers extends HttpServlet {
 	     
 	}
 	
+	private void configureFilesPath() 
+	{
+        String path = this.servletContext.getRealPath(".") + FILES_PATH;
+        File filesPath = new File(path);
+
+        if (!filesPath.exists()) {
+            //log.info("Creating directory {}", path);
+
+            filesPath.mkdir();
+
+            //log.info("Directory {} successfully created.", path);
+        }
+    }
+	
 	protected void printNonDuplicateNumbers(Iterable<PhoneNumberMatch> matches, HttpServletResponse response) {
 		Iterator<PhoneNumberMatch> i = matches.iterator();
 		ArrayList<PhoneNumber> fullNumberList = new ArrayList<>();
@@ -103,14 +137,28 @@ public class Phonenumbers extends HttpServlet {
 			}
 		}
 		try {
-			response.getWriter().print("[");
-			Iterator<PhoneNumber> j = noDuplicateList.iterator();
-			while (j.hasNext()) {
-				PhoneNumber m = j.next();
-				String out = "\"" + phoneUtil.format(m, PhoneNumberFormat.NATIONAL) + "\"";				
-				response.getWriter().print(j.hasNext() ? out + "," : out);	
+			if(!doPostTestFlag)
+			{
+				response.getWriter().print("[");
+				Iterator<PhoneNumber> j = noDuplicateList.iterator();
+				while (j.hasNext()) {
+					PhoneNumber m = j.next();
+					String out = "\"" + phoneUtil.format(m, PhoneNumberFormat.NATIONAL) + "\"";				
+					response.getWriter().print(j.hasNext() ? out + "," : out);	
+				}
+				response.getWriter().print("]");
 			}
-			response.getWriter().print("]");	
+			else
+			{
+				response.getWriter().print("[");
+				Iterator<PhoneNumber> j = noDuplicateList.iterator();
+				while (j.hasNext()) {
+					PhoneNumber m = j.next();
+					String out = "\"" + phoneUtil.format(m, PhoneNumberFormat.NATIONAL) + "\"";		
+					response.getWriter().print(j.hasNext() ? out + "," : out);	
+				}
+				response.getWriter().print("]");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
