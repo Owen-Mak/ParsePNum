@@ -6,6 +6,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,13 +23,24 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -37,6 +49,7 @@ import java.util.Iterator;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -54,9 +67,35 @@ public class PhonenumbersTest extends TestCase{
 	@Mock
 	HttpServletResponse response;
 	
+	private ServletFileUpload fileUpload;
+    private Phonenumbers pNumbers;
+    private FileItemStream uploadStream;
+    private String uid;
+	
     @Before
     protected void setUp() throws Exception {
+    	
+    	ServletContext servletContext = mock(ServletContext.class);
+
+        when(servletContext.getRealPath(anyString())).thenReturn("/tmp");
+
+        ServletConfig config = mock(ServletConfig.class);
+        when(config.getServletContext()).thenReturn(servletContext);
+
+        fileUpload = mock(ServletFileUpload.class);
+        
+        pNumbers = new Phonenumbers(fileUpload);
+        pNumbers.init(config);
+
+        uid = newUid();
+    	
     	MockitoAnnotations.initMocks(this);
+    }
+    
+    @Before
+    public void createRequestAndResponse() {
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
     }
     
     @Test
@@ -111,39 +150,35 @@ public class PhonenumbersTest extends TestCase{
 		assertEquals("[\"(416) 297-4913\"]", result);
     }
 	
-    @Test
-    public void testdoPost() throws Exception{
-    	//this is a WIP to test the doPost method
-    	//have been trying to create a httpServletRequest from code to simulate a post request without success
-    	//need to create request, add file upload payload onto the request, and call doPost() with request
-    	//will try doing this using Spring Test Framework in the future    	    
-		
-    	//FileInputStream f = new FileInputStream(new File("F:/Users/Owen/Documents/workspace/ParsePNum/tempReadme.txt"));		
-		File f = new File("tempReadme.txt");
-		DiskFileItemFactory factory = new DiskFileItemFactory();				
-	    File repository = new File("tempReadme.txt");
-	    factory.setRepository(repository);	    
-	    ServletFileUpload tempUpload = new ServletFileUpload(factory);
-	    	    	   
-		//InputStream fileIn = new FileInputStream(f);
-	    //when(in).thenReturn(fileIn);
-	    //when(contents).thenReturn("123456789");
-		PhoneNumberUtil pNumUtil = PhoneNumberUtil.getInstance();
-		Iterable<PhoneNumberMatch> match = pNumUtil.findNumbers("416-297-4913", "CA");
-		Iterator<PhoneNumberMatch> it = match.iterator();
-		when(request.getContentType()).thenReturn("multipart/form-data; boundary=someBoundary");		
-	    //when(phoneUtil.findNumbers("123456789","CA")).thenReturn(match);
-		//when(i).thenReturn(match.iterator());			
-		//redirects server responses to sw		
-		StringWriter sw = new StringWriter();
+    @SuppressWarnings("resource")
+	@Test
+    public void testdoPost() throws Exception
+    {	
+    	System.out.println("Test #3");
+    	String uploadContents = "[\"(908) 908-9008\",\"(907) 907-9007\",\"(906) 906-9006\"]";
+        setupMultiPartRequest("randomfile.txt", uid, uploadContents, uploadContents.length());
+
+        File f = new File("src/test/java/randomfile.txt");
+        if(f.exists() && !f.isDirectory()) 
+        { 
+        	PrintWriter writer = new PrintWriter(f.getName(), "UTF-8");
+        	writer.println("9089089008 9079079007 9069069006 Extra Text! ");
+        	writer.close();
+        }
+        
+        f.createNewFile();
+        
+        StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		when(response.getWriter()).thenReturn(pw);		
-		new Phonenumbers().doPost(request, response);
-		//stores server responses to result			
-		String result = sw.getBuffer().toString().trim();	
-		System.out.println("Result: " + result);
-		
-    		    	
+        when(response.getWriter()).thenReturn(pw);
+        pNumbers.doPost(request, response);
+        
+        //String result = new BufferedReader(new FileReader(f.getName())).readLine();
+        String result = sw.getBuffer().toString().trim();
+        
+        System.out.println("Expected Result: [\"(908) 908-9008\",\"(907) 907-9007\",\"(906) 906-9006\"]\tActual Result: " + result);
+        assertEquals(uploadContents, result);
+    	
     }
     
 	@Test
@@ -156,4 +191,35 @@ public class PhonenumbersTest extends TestCase{
 	    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(outContent));
 	}
+	
+	private void setupMultiPartRequest(String originalFileName, String uid, String uploadContents, int contentLength) throws Exception 
+	{
+        FileItemStream uidStream = mock(FileItemStream.class);
+        when(uidStream.isFormField()).thenReturn(true);
+        when(uidStream.getFieldName()).thenReturn("uid");
+        when(uidStream.openStream()).thenReturn(stringToStream(uid));
+
+        uploadStream = mock(FileItemStream.class);
+        when(uploadStream.isFormField()).thenReturn(false);
+        when(uploadStream.getName()).thenReturn(originalFileName);
+        when(uploadStream.openStream()).thenReturn(stringToStream(uploadContents));
+
+        FileItemIterator itemIterator = mock(FileItemIterator.class);
+        when(itemIterator.hasNext()).thenReturn(true, true, false);
+        when(itemIterator.next()).thenReturn(uidStream, uploadStream);
+        when(fileUpload.getItemIterator(request)).thenReturn(itemIterator);
+
+        when(request.getContextPath()).thenReturn("/");
+        when(request.getContentLength()).thenReturn(contentLength);
+    }
+	
+	private ByteArrayInputStream stringToStream(String string) 
+	{
+        return new ByteArrayInputStream(string.getBytes());
+    }
+	
+	private String newUid() 
+	{
+        return String.valueOf(System.currentTimeMillis());
+    }
 }
