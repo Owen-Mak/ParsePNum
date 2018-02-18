@@ -88,7 +88,7 @@ public class Phonenumbers extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//ServletFileUpload upload = new ServletFileUpload();
-		//fileUpload = new ServletFileUpload();
+		ServletFileUpload fileUpload = new ServletFileUpload();
 		fileUpload.setSizeMax(50000);
 		String contents = null;
 		try {
