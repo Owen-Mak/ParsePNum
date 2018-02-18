@@ -85,8 +85,8 @@ To start a unit test:
 To add more test cases, simply create a new test# method, and add that test method onto the main method.
 
 # To Do
-*  ~~Unit testing for doPost()
-   *  Ideally using Spring Test Framework or JUnit with Mockito~~
+*  ~~Unit testing for doPost()~~
+   *  ~~Ideally using Spring Test Framework or JUnit with Mockito~~
 *  Include more test cases 
 *  ~~Automated testing using Travis CI~~
 *  ~~Parsing PDF or MS Word files~~
